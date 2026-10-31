@@ -17,7 +17,7 @@ from sklearn.metrics import (
 # ==========================================
 
 st.set_page_config(
-    page_title="ScamShield AI",
+    page_title="THE PHISHY FISH",
     page_icon="🛡️",
     layout="wide"
 )
@@ -269,7 +269,7 @@ div[data-testid="stTextArea"] textarea {
 # ==========================================
 
 st.markdown(
-    "<h1 style='text-align:center;'>🛡️ SCAMSHIELD AI</h1>",
+    "<h1 style='text-align:center;'>🛡️ THE PHISHY FISH</h1>",
     unsafe_allow_html=True
 )
 
@@ -433,7 +433,7 @@ with tab1:
             st.write("- Ask a trusted adult if you are unsure.")
 
             st.info(
-                "ScamShield AI is an experimental educational prototype. "
+                "THE PHISHY FISH is an experimental educational prototype. "
                 "It may miss suspicious messages or flag ordinary messages."
             )
 
@@ -664,12 +664,12 @@ with tab3:
 
 with tab4:
 
-    st.title("ℹ️ ABOUT SCAMSHIELD AI")
+    st.title("ℹ️ ABOUT THE PHISHY FISH")
 
     st.subheader("Our Mission")
 
     st.write(
-        "ScamShield AI aims to help people recognise suspicious "
+        "THE PHISHY FISH aims to help people recognise suspicious "
         "message patterns and make safer digital decisions."
     )
 
@@ -719,7 +719,7 @@ with tab4:
 
     st.markdown(
         "<h3 style='text-align:center;'>"
-        "🛡️ SCAMSHIELD AI"
+        "🛡️ THE PHISHY FISH"
         "</h3>",
         unsafe_allow_html=True
     )
