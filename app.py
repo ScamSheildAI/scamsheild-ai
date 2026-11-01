@@ -707,11 +707,6 @@ with tab2:
         use_container_width=True,
         hide_index=True
     )
-        "These results come from a small, manually created "
-        "demonstration dataset. They do not establish "
-        "real-world scam detection accuracy."
-    )
-
 
 # ==========================================
 # 9. VISUAL ANALYTICS
