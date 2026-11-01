@@ -145,7 +145,7 @@ reward_lure_found = bool(
     )
 )
     # 5. Urgent pressure
-    pressure_patterns = [
+pressure_patterns = [
         r"\burgent(ly)?\b",
         r"\bimmediately\b",
         r"\basap\b",
