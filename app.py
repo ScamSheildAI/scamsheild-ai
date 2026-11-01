@@ -683,26 +683,30 @@ with tab2:
 
     st.subheader("📋 Individual Test Results")
 
-    results_df = pd.DataFrame(results)
-missed_messages = results_df[
-    (results_df["Expected"] == "SUSPICIOUS") &
-    (results_df["Predicted"] == "NORMAL")
-]
+     results_df = pd.DataFrame(results)
 
-st.subheader("🚨 Missed Suspicious Messages")
+    st.subheader("📋 Individual Test Results")
 
-st.dataframe(
-    missed_messages,
-    use_container_width=True,
-    hide_index=True
-)
     st.dataframe(
         results_df,
         use_container_width=True,
         hide_index=True
     )
 
-    st.info(
+    st.divider()
+
+    missed_messages = results_df[
+        (results_df["Expected"] == "SUSPICIOUS") &
+        (results_df["Predicted"] == "NORMAL")
+    ]
+
+    st.subheader("🚨 Missed Suspicious Messages")
+
+    st.dataframe(
+        missed_messages,
+        use_container_width=True,
+        hide_index=True
+    )
         "These results come from a small, manually created "
         "demonstration dataset. They do not establish "
         "real-world scam detection accuracy."
