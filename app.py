@@ -156,7 +156,7 @@ pressure_patterns = [
         r"\bexpires soon\b"
     ]
 
-    pressure_found = any(
+pressure_found = any(
         re.search(pattern, text) for pattern in pressure_patterns
     )
 
