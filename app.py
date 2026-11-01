@@ -156,11 +156,14 @@ def analyse_message(message):
         r"\bexpires soon\b",
         r"\bbefore it expires\b"
         r"\b(reward|prize|offer|cashback)\b.{0,30}\b(expire|expires|expired)\b",
+        r"\b(reward|prize|offer|cashback)\b.{0,30}\b(expire|expires|expired)\b",
     ]
 
     pressure_found = any(
         re.search(pattern, text) for pattern in pressure_patterns
     )
+    st.write("DEBUG pressure:", pressure_found)
+st.write("DEBUG reward:", reward_found)
 
     # 6. Suspicious links
     link_patterns = [
