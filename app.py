@@ -1,4 +1,8 @@
-
+st.dataframe(
+    missed_messages,
+    use_container_width=True,
+    hide_index=True
+)
 import streamlit as st
 import pandas as pd
 
