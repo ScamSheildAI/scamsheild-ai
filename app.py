@@ -186,37 +186,37 @@ payment_destination_found = (
     )
 
     # 8. Explain detected warning signs
-    if credential_found:
+if credential_found:
         reasons.append(
             "The message requests sensitive information such as an OTP, password or PIN."
         )
 
-    if money_found:
+if money_found:
         reasons.append(
             "The message contains a possible money transfer or payment request."
         )
 
-    if payment_destination_found and money_found:
+if payment_destination_found and money_found:
         reasons.append(
             "A payment request is accompanied by a phone number or payment identifier."
         )
 
-    if account_found and pressure_found:
+if account_found and pressure_found:
         reasons.append(
             "The message combines an account threat with urgent pressure."
         )
 
-    if reward_found and pressure_found:
+if reward_found and pressure_found:
         reasons.append(
             "The message combines a prize or reward with urgent pressure."
         )
 
-    if unknown_link_found:
+if unknown_link_found:
         reasons.append(
             "The message encourages clicking or opening a potentially unknown link."
         )
 
-    if payment_destination_found and not money_found:
+if payment_destination_found and not money_found:
         reasons.append(
             "The message contains a phone number or payment identifier. This alone does not establish fraud."
         )
