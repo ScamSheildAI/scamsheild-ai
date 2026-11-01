@@ -547,7 +547,17 @@ test_data = [
     ("Please send the homework link to our class group.", 0),
     ("I need to pay my electricity bill this week.", 0),
     ("My account is working normally. Thank you.", 0)  
-
+    # EXTRA TEST CASES
+    ("Your account needs immediate verification. Send your OTP.", 1),
+    ("Transfer Rs 300 now to unlock your account.", 1),
+    ("You have won a shopping voucher. Claim immediately.", 1),
+    ("Click this unknown link to update your banking details.", 1),
+    ("Your delivery is delayed. Pay a fee urgently.", 1),
+    ("Please bring your science textbook tomorrow.", 0),
+    ("The school football tournament begins next month.", 0),
+    ("I transferred money for my school fees yesterday.", 0),
+    ("Your appointment reminder is scheduled for 4 PM.", 0),
+    ("The teacher shared a new homework assignment.", 0),
 ]
 
 actual_labels = []
