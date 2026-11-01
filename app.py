@@ -173,15 +173,15 @@ unknown_link_found = any(
     )
 
     # 7. Phone number or payment destination
-    phone_found = bool(
+phone_found = bool(
         re.search(r"(?<!\d)(?:\+91[\s-]?)?[6-9]\d{9}(?!\d)", text)
     )
 
-    upi_found = bool(
+upi_found = bool(
         re.search(r"\b[\w.-]+@[\w.-]+\b", text)
     )
 
-    payment_destination_found = (
+payment_destination_found = (
         phone_found or upi_found
     )
 
