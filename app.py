@@ -168,7 +168,7 @@ link_patterns = [
         r"\bunknown link\b"
     ]
 
-    unknown_link_found = any(
+unknown_link_found = any(
         re.search(pattern, text) for pattern in link_patterns
     )
 
