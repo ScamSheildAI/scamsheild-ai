@@ -684,7 +684,18 @@ with tab2:
     st.subheader("📋 Individual Test Results")
 
     results_df = pd.DataFrame(results)
+missed_messages = results_df[
+    (results_df["Expected"] == "SUSPICIOUS") &
+    (results_df["Predicted"] == "NORMAL")
+]
 
+st.subheader("🚨 Missed Suspicious Messages")
+
+st.dataframe(
+    missed_messages,
+    use_container_width=True,
+    hide_index=True
+)
     st.dataframe(
         results_df,
         use_container_width=True,
