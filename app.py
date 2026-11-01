@@ -683,7 +683,7 @@ with tab2:
 
     st.subheader("📋 Individual Test Results")
 
-     results_df = pd.DataFrame(results)
+    results_df = pd.DataFrame(results)
 
     st.subheader("📋 Individual Test Results")
 
