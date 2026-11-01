@@ -703,6 +703,28 @@ test_data = [
     ("Your bank account is blocked. Click the link to restore it.", 1),
     ("Provide your password immediately to receive cashback.", 1),
     ("Congratulations! You are the winner of a free gift.", 1),
+        # MORE NORMAL MESSAGES
+    ("Your school assignment has been uploaded.", 0),
+    ("The science exhibition starts tomorrow.", 0),
+    ("Your electricity bill is available in the official app.", 0),
+    ("Your train reservation is confirmed.", 0),
+    ("The football tournament begins at 4 PM.", 0),
+    ("Your payment receipt has been generated.", 0),
+    ("Please attend the online class at 9 AM.", 0),
+    ("Your library membership expires next month.", 0),
+    ("Your parcel will arrive by Thursday.", 0),
+    ("The school holiday notice has been published.", 0),
+        # MORE SUSPICIOUS MESSAGES
+    ("Share your OTP to receive your bank refund.", 1),
+    ("Your account will be suspended unless you verify now.", 1),
+    ("Congratulations! Claim your cash prize by paying a fee.", 1),
+    ("Transfer ₹1000 immediately to unlock your reward.", 1),
+    ("Your KYC has expired. Enter your banking PIN.", 1),
+    ("Click this unknown link to avoid account closure.", 1),
+    ("You have won a free laptop. Pay the delivery charge.", 1),
+    ("Send your password to restore your blocked account.", 1),
+    ("Your cashback expires in ten minutes. Claim it now.", 1),
+    ("Share your card details to receive a surprise gift.", 1),
 ]
 
 actual_labels = []
