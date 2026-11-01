@@ -443,7 +443,6 @@ with tab1:
 # ==========================================
 
 test_data = [
-test_data = [
 
     # NORMAL MESSAGES
     ("The science exam is on Monday.", 0),
@@ -547,8 +546,7 @@ test_data = [
     ("The bank sent me a transaction notification.", 0),
     ("Please send the homework link to our class group.", 0),
     ("I need to pay my electricity bill this week.", 0),
-    ("My account is working normally. Thank you.", 0)
-   
+    ("My account is working normally. Thank you.", 0)  
 
 ]
 
