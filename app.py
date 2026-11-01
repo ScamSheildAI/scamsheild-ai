@@ -695,7 +695,6 @@ with tab2:
 
     results_df = pd.DataFrame(results)
 
-    st.subheader("📋 Individual Test Results")
 
     st.dataframe(
         results_df,
