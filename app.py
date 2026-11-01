@@ -161,10 +161,10 @@ def analyse_message(message):
 
     pressure_found = any(
         re.search(pattern, text) for pattern in pressure_patterns
-    )
+    
     st.write("DEBUG pressure:", pressure_found)
 st.write("DEBUG reward:", reward_found)
-
+    )
     # 6. Suspicious links
     link_patterns = [
         r"\bclick\b.{0,40}\b(link|url)\b",
