@@ -82,97 +82,118 @@ X_vectorized = vectorizer.fit_transform(X_train)
 model = LogisticRegression(max_iter=1000)
 model.fit(X_vectorized, y_train)
 
+
 # ==========================================
-# 3. RULE-BASED DETECTION
+# 3. IMPROVED RULE-BASED DETECTION
 # ==========================================
+
+import re
 
 def analyse_message(message):
 
     text = " ".join(message.lower().split())
     reasons = []
 
-    credential_phrases = [
-        "share your otp",
-        "send your otp",
-        "provide your otp",
-        "enter your otp",
-        "share otp",
-        "send otp",
-        "share your password",
-        "send your password",
-        "provide your password",
-        "share your pin",
-        "send your pin",
-        "login details"
-    ]
-
-    money_phrases = [
-        "send money",
-        "pay now",
-        "pay a fee",
-        "transfer money"
-    ]
-
-    account_phrases = [
-        "account will close",
-        "account will be closed",
-        "account will be blocked",
-        "account will be suspended",
-        "account is at risk"
-    ]
-
-    reward_phrases = [
-        "prize",
-        "reward",
-        "cashback",
-        "free gift",
-        "winner"
-    ]
-
-    pressure_phrases = [
-        "urgent",
-        "immediately",
-        "claim now",
-        "act now"
+    # 1. Sensitive information requests
+    credential_patterns = [
+        r"\bshare\b.{0,35}\b(otp|password|pin|passcode)\b",
+        r"\bsend\b.{0,35}\b(otp|password|pin|passcode)\b",
+        r"\b(provide|reveal|disclose)\b.{0,35}\b(otp|password|pin|passcode)\b",
+        r"\b(login details|banking details|card details)\b",
+        r"\b(enter|reply with)\b.{0,35}\b(otp|verification code)\b"
     ]
 
     credential_found = any(
-        phrase in text for phrase in credential_phrases
+        re.search(pattern, text) for pattern in credential_patterns
     )
+
+    # 2. Money transfer requests
+    money_patterns = [
+        r"\b(send|transfer|deposit|pay)\b.{0,50}\b(money|cash|rupees|rs\.?|inr)\b",
+        r"\b(send|transfer|deposit|pay)\b.{0,35}₹\s?\d+",
+        r"\b(send|transfer|deposit|pay)\b.{0,35}\b\d+\b",
+        r"\b(pay a fee|processing fee|transfer money)\b"
+    ]
 
     money_found = any(
-        phrase in text for phrase in money_phrases
+        re.search(pattern, text) for pattern in money_patterns
     )
+
+    # 3. Account threats
+    account_patterns = [
+        r"\baccount\b.{0,35}\b(closed|blocked|suspended|disabled)\b",
+        r"\b(account is at risk|account will close)\b",
+        r"\b(sim|bank account)\b.{0,35}\b(blocked|suspended|stopped)\b"
+    ]
 
     account_found = any(
-        phrase in text for phrase in account_phrases
+        re.search(pattern, text) for pattern in account_patterns
     )
+
+    # 4. Rewards and prizes
+    reward_patterns = [
+        r"\b(prize|reward|cashback|free gift|winner|lottery|voucher)\b"
+    ]
 
     reward_found = any(
-        phrase in text for phrase in reward_phrases
+        re.search(pattern, text) for pattern in reward_patterns
     )
+
+    # 5. Urgent pressure
+    pressure_patterns = [
+        r"\burgent(ly)?\b",
+        r"\bimmediately\b",
+        r"\basap\b",
+        r"\bright away\b",
+        r"\bact now\b",
+        r"\bclaim now\b",
+        r"\bwithin \d+ minutes?\b",
+        r"\bexpires soon\b"
+    ]
 
     pressure_found = any(
-        phrase in text for phrase in pressure_phrases
+        re.search(pattern, text) for pattern in pressure_patterns
     )
 
-    unknown_link_found = (
-        "click" in text and
-        any(term in text for term in [
-            "unknown link",
-            "this link",
-            "link below"
-        ])
+    # 6. Suspicious link language
+    link_patterns = [
+        r"\bclick\b.{0,40}\b(link|url)\b",
+        r"\b(open|visit)\b.{0,40}\b(link|url)\b",
+        r"\blink below\b",
+        r"\bunknown link\b"
+    ]
+
+    unknown_link_found = any(
+        re.search(pattern, text) for pattern in link_patterns
     )
 
+    # 7. Phone number or payment destination
+    phone_found = bool(
+        re.search(r"(?<!\d)(?:\+91[\s-]?)?[6-9]\d{9}(?!\d)", text)
+    )
+
+    upi_found = bool(
+        re.search(r"\b[\w.-]+@[\w.-]+\b", text)
+    )
+
+    payment_destination_found = (
+        phone_found or upi_found
+    )
+
+    # 8. Explain detected warning signs
     if credential_found:
         reasons.append(
-            "The message asks for sensitive information such as an OTP, password or PIN."
+            "The message requests sensitive information such as an OTP, password or PIN."
         )
 
     if money_found:
         reasons.append(
-            "The message contains a request to send or transfer money."
+            "The message contains a possible money transfer or payment request."
+        )
+
+    if payment_destination_found and money_found:
+        reasons.append(
+            "A payment request is accompanied by a phone number or payment identifier."
         )
 
     if account_found and pressure_found:
@@ -182,22 +203,30 @@ def analyse_message(message):
 
     if reward_found and pressure_found:
         reasons.append(
-            "The message combines a reward or prize with urgent pressure."
+            "The message combines a prize or reward with urgent pressure."
         )
 
     if unknown_link_found:
         reasons.append(
-            "The message encourages clicking a potentially unknown link."
+            "The message encourages clicking or opening a potentially unknown link."
         )
 
+    if payment_destination_found and not money_found:
+        reasons.append(
+            "The message contains a phone number or payment identifier. This alone does not establish fraud."
+        )
+
+    # 9. Final decision
     suspicious = (
         credential_found
-        or money_found
+        or (money_found and (pressure_found or reward_found or account_found))
         or (account_found and pressure_found)
         or (reward_found and pressure_found)
         or unknown_link_found
+        or (money_found and payment_destination_found)
     )
 
+    # 10. Risk classification
     if credential_found:
         risk = "HIGH"
     elif suspicious:
@@ -206,6 +235,7 @@ def analyse_message(message):
         risk = "LOW"
 
     return suspicious, risk, reasons
+
 
 
 # ==========================================
