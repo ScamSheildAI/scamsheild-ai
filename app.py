@@ -546,7 +546,7 @@ test_data = [
     ("The bank sent me a transaction notification.", 0),
     ("Please send the homework link to our class group.", 0),
     ("I need to pay my electricity bill this week.", 0),
-    ("My account is working normally. Thank you.", 0)  
+    ("My account is working normally. Thank you.", 0),  
     # EXTRA TEST CASES
     ("Your account needs immediate verification. Send your OTP.", 1),
     ("Transfer Rs 300 now to unlock your account.", 1),
