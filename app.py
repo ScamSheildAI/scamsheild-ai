@@ -138,7 +138,12 @@ def analyse_message(message):
     reward_found = any(
         re.search(pattern, text) for pattern in reward_patterns
     )
-
+reward_lure_found = bool(
+    re.search(
+        r"\b(win|won|winner|lottery|cash prize|free gift|free iphone|special prize|cashback|claim your reward|selected for a prize)\b",
+        text
+    )
+)
     # 5. Urgent pressure
     pressure_patterns = [
         r"\burgent(ly)?\b",
@@ -220,6 +225,7 @@ def analyse_message(message):
     suspicious = (
         credential_found
         or (money_found and (pressure_found or reward_found or account_found))
+        or reward_lure_found
         or (account_found and pressure_found)
         or (reward_found and pressure_found)
         or unknown_link_found
