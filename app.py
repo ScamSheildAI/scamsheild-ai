@@ -155,6 +155,7 @@ def analyse_message(message):
         r"\bwithin \d+ minutes?\b",
         r"\bexpires soon\b",
         r"\bbefore it expires\b"
+        r"\b(reward|prize|offer|cashback)\b.{0,30}\b(expire|expires|expired)\b",
     ]
 
     pressure_found = any(
