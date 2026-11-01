@@ -443,20 +443,112 @@ with tab1:
 # ==========================================
 
 test_data = [
+test_data = [
 
+    # NORMAL MESSAGES
     ("The science exam is on Monday.", 0),
     ("Your school bus arrives at 7:30 AM.", 0),
     ("Please submit your homework tomorrow.", 0),
     ("Your library book is due next week.", 0),
     ("The parent meeting starts at 10 AM.", 0),
     ("Your sports practice is cancelled today.", 0),
+    ("Happy birthday! Have a wonderful day.", 0),
+    ("The school annual day is next Friday.", 0),
+    ("Please bring your notebook to class.", 0),
+    ("Your assignment has been checked.", 0),
+    ("The football match starts at 5 PM.", 0),
+    ("Your parcel has been delivered.", 0),
+    ("Thank you for attending the meeting.", 0),
+    ("Your class timetable has been updated.", 0),
+    ("The science exhibition is tomorrow.", 0),
+    ("Your appointment is confirmed for Monday.", 0),
+    ("Your electricity bill is available online.", 0),
+    ("Your payment receipt is ready.", 0),
+    ("Your order has been shipped.", 0),
+    ("The school will remain closed tomorrow.", 0),
+    ("Please call me when you are free.", 0),
+    ("Your bus pass expires next month.", 0),
+    ("The result will be announced next week.", 0),
+    ("Your registration was completed successfully.", 0),
+    ("Thank you for your feedback.", 0),
 
+    # OTP AND PASSWORD
     ("Share your OTP immediately to claim your reward.", 1),
     ("Send your password to receive your prize.", 1),
-    ("URGENT! Pay now to receive your free gift.", 1),
-    ("Your account will be suspended. Verify immediately.", 1),
+    ("Give us your banking PIN now.", 1),
+    ("Reply with your OTP to verify your account.", 1),
+    ("Send your login details to avoid account suspension.", 1),
+    ("Your account is blocked. Share your password now.", 1),
+    ("Provide your card PIN immediately.", 1),
+    ("We need your OTP to release your cashback.", 1),
+    ("Send your verification code to claim the reward.", 1),
+    ("Your account will close unless you share your OTP.", 1),
+
+    # MONEY TRANSFERS
+    ("Urgent! Send Rs 500 immediately to receive your reward.", 1),
+    ("Transfer ₹1000 now to unlock your prize.", 1),
+    ("Pay now to receive your free gift.", 1),
+    ("Deposit Rs 250 urgently to confirm your winning prize.", 1),
+    ("Send money immediately to avoid account closure.", 1),
+    ("Transfer INR 2000 to claim your cashback.", 1),
+    ("Pay a processing fee now to receive your reward.", 1),
+    ("Send 500 rupees to this number urgently.", 1),
+    ("You must transfer money immediately to verify your account.", 1),
+    ("Pay now or your reward will expire.", 1),
+    ("Send Rs 750 within 5 minutes to claim your prize.", 1),
+    ("Deposit money immediately to activate your reward.", 1),
+    ("Transfer ₹1500 right away to receive your gift.", 1),
+    ("Pay a fee urgently to unlock your account.", 1),
+    ("Send 1000 to this number 9876543210 urgently.", 1),
+
+    # PRIZES AND REWARDS
+    ("Congratulations! You have won a free iPhone.", 1),
     ("You are a winner. Claim now!", 1),
-    ("Click this unknown link to claim a cash prize.", 1)
+    ("You have received a surprise cash prize.", 1),
+    ("Claim your free gift immediately.", 1),
+    ("You won a lottery. Contact us now.", 1),
+    ("Your reward is waiting. Act now.", 1),
+    ("You have been selected for a special prize.", 1),
+    ("Claim your cashback before it expires.", 1),
+    ("Congratulations! Receive your free shopping voucher.", 1),
+    ("You are today's lucky winner. Claim your prize now.", 1),
+
+    # UNKNOWN LINKS
+    ("Click this unknown link to claim a cash prize.", 1),
+    ("Open this link immediately to verify your account.", 1),
+    ("Click the link below to receive your reward.", 1),
+    ("Visit this unknown link to unlock your prize.", 1),
+    ("Your account is blocked. Click this link now.", 1),
+    ("Click this link urgently to claim your cashback.", 1),
+    ("Open this link to prevent account suspension.", 1),
+    ("Click this unknown link to receive a free gift.", 1),
+    ("Verify your details through this link immediately.", 1),
+    ("Act now! Click this link to claim your reward.", 1),
+
+    # IMPERSONATION
+    ("This is your bank. Share your OTP immediately.", 1),
+    ("Your bank account will be suspended. Verify now.", 1),
+    ("We are from customer support. Send your password.", 1),
+    ("Your parcel is on hold. Pay a fee immediately.", 1),
+    ("Your electricity connection will be stopped. Pay now.", 1),
+    ("Government reward approved. Share your bank details.", 1),
+    ("Your account has unusual activity. Send your PIN.", 1),
+    ("This is the security team. Provide your login details.", 1),
+    ("Your SIM will be blocked. Verify your OTP now.", 1),
+    ("Your payment failed. Click this unknown link immediately.", 1),
+
+    # EDGE CASES
+    ("I paid the school trip fee yesterday.", 0),
+    ("My friend sent me Rs 500 yesterday.", 0),
+    ("Please transfer the project files to my laptop.", 0),
+    ("The winner of the football match was our school.", 0),
+    ("Our teacher said the exam is urgent.", 0),
+    ("I received a reward for completing the school activity.", 0),
+    ("The bank sent me a transaction notification.", 0),
+    ("Please send the homework link to our class group.", 0),
+    ("I need to pay my electricity bill this week.", 0),
+    ("My account is working normally. Thank you.", 0)
+   
 
 ]
 
