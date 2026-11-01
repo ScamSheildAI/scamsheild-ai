@@ -161,7 +161,7 @@ pressure_found = any(
     )
 
     # 6. Suspicious link language
-    link_patterns = [
+link_patterns = [
         r"\bclick\b.{0,40}\b(link|url)\b",
         r"\b(open|visit)\b.{0,40}\b(link|url)\b",
         r"\blink below\b",
