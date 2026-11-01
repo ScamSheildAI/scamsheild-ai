@@ -96,11 +96,9 @@ def analyse_message(message):
 
     # 1. Sensitive information requests
     credential_patterns = [
-        r"\bshare\b.{0,35}\b(otp|password|pin|passcode)\b",
-        r"\bsend\b.{0,35}\b(otp|password|pin|passcode)\b",
-        r"\b(provide|reveal|disclose)\b.{0,35}\b(otp|password|pin|passcode)\b",
-        r"\b(login details|banking details|card details)\b",
-        r"\b(enter|reply with)\b.{0,35}\b(otp|verification code)\b"
+        r"\b(share|send|give|provide|reveal|disclose)\b.{0,35}\b(otp|password|pin|passcode|verification code)\b",
+        r"\b(need|require|enter|reply with)\b.{0,35}\b(otp|password|pin|passcode|verification code)\b",
+        r"\b(banking pin|banking details|card details|login details)\b"
     ]
 
     credential_found = any(
@@ -138,14 +136,16 @@ def analyse_message(message):
     reward_found = any(
         re.search(pattern, text) for pattern in reward_patterns
     )
-reward_lure_found = bool(
-    re.search(
-        r"\b(win|won|winner|lottery|cash prize|free gift|free iphone|special prize|cashback|claim your reward|selected for a prize)\b",
-        text
+
+    reward_lure_found = bool(
+        re.search(
+            r"\b(win|won|winner|lottery|cash prize|free gift|free iphone|special prize|cashback|claim your reward|selected for a prize)\b",
+            text
+        )
     )
-)
+
     # 5. Urgent pressure
-pressure_patterns = [
+    pressure_patterns = [
         r"\burgent(ly)?\b",
         r"\bimmediately\b",
         r"\basap\b",
@@ -153,83 +153,87 @@ pressure_patterns = [
         r"\bact now\b",
         r"\bclaim now\b",
         r"\bwithin \d+ minutes?\b",
-        r"\bexpires soon\b"
+        r"\bexpires soon\b",
+        r"\bbefore it expires\b"
     ]
 
-pressure_found = any(
+    pressure_found = any(
         re.search(pattern, text) for pattern in pressure_patterns
     )
 
-    # 6. Suspicious link language
-link_patterns = [
+    # 6. Suspicious links
+    link_patterns = [
         r"\bclick\b.{0,40}\b(link|url)\b",
         r"\b(open|visit)\b.{0,40}\b(link|url)\b",
         r"\blink below\b",
         r"\bunknown link\b"
     ]
 
-unknown_link_found = any(
+    unknown_link_found = any(
         re.search(pattern, text) for pattern in link_patterns
     )
 
-    # 7. Phone number or payment destination
-phone_found = bool(
+    # 7. Payment destination
+    phone_found = bool(
         re.search(r"(?<!\d)(?:\+91[\s-]?)?[6-9]\d{9}(?!\d)", text)
     )
 
-upi_found = bool(
+    upi_found = bool(
         re.search(r"\b[\w.-]+@[\w.-]+\b", text)
     )
 
-payment_destination_found = (
-        phone_found or upi_found
-    )
+    payment_destination_found = phone_found or upi_found
 
-    # 8. Explain detected warning signs
-if credential_found:
+    # 8. Explain warning signs
+    if credential_found:
         reasons.append(
             "The message requests sensitive information such as an OTP, password or PIN."
         )
 
-if money_found:
+    if money_found:
         reasons.append(
             "The message contains a possible money transfer or payment request."
         )
 
-if payment_destination_found and money_found:
+    if payment_destination_found and money_found:
         reasons.append(
             "A payment request is accompanied by a phone number or payment identifier."
         )
 
-if account_found and pressure_found:
+    if account_found and pressure_found:
         reasons.append(
             "The message combines an account threat with urgent pressure."
         )
 
-if reward_found and pressure_found:
+    if reward_lure_found:
         reasons.append(
-            "The message combines a prize or reward with urgent pressure."
+            "The message uses a prize, reward or cashback claim."
         )
 
-if unknown_link_found:
+    if unknown_link_found:
         reasons.append(
             "The message encourages clicking or opening a potentially unknown link."
         )
 
-if payment_destination_found and not money_found:
+    if payment_destination_found and not money_found:
         reasons.append(
             "The message contains a phone number or payment identifier. This alone does not establish fraud."
+        )
+
+    if pressure_found:
+        reasons.append(
+            "The message uses urgency or time pressure."
         )
 
     # 9. Final decision
     suspicious = (
         credential_found
         or (money_found and (pressure_found or reward_found or account_found))
-        or reward_lure_found
         or (account_found and pressure_found)
         or (reward_found and pressure_found)
         or unknown_link_found
         or (money_found and payment_destination_found)
+        or reward_lure_found
     )
 
     # 10. Risk classification
